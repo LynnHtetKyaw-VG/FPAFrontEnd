@@ -1,0 +1,1354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="FPAService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="COA" EntityType="FPAService.COA" sap:searchable="false"/>
+                <EntitySet Name="CostCenters" EntityType="FPAService.CostCenters" sap:searchable="false"/>
+                <EntitySet Name="Driver" EntityType="FPAService.Driver" sap:searchable="false"/>
+                <EntitySet Name="Components" EntityType="FPAService.Components" sap:searchable="false"/>
+                <EntitySet Name="UoM" EntityType="FPAService.UoM" sap:searchable="false"/>
+                <EntitySet Name="UsageType" EntityType="FPAService.UsageType"/>
+                <EntitySet Name="PlanHeader" EntityType="FPAService.PlanHeader"/>
+                <EntitySet Name="ComponentDetail" EntityType="FPAService.ComponentDetail"/>
+                <EntitySet Name="UserMaster" EntityType="FPAService.UserMaster"/>
+                <EntitySet Name="getCOA" EntityType="FPAService.getCOA" sap:searchable="false"/>
+                <EntitySet Name="getCostCenters" EntityType="FPAService.getCostCenters" sap:searchable="false"/>
+                <EntitySet Name="getDriver" EntityType="FPAService.getDriver" sap:searchable="false"/>
+                <EntitySet Name="getComponents" EntityType="FPAService.getComponents" sap:searchable="false"/>
+                <EntitySet Name="getUoM" EntityType="FPAService.getUoM" sap:searchable="false"/>
+                <EntitySet Name="Currencies" EntityType="FPAService.Currencies"/>
+                <EntitySet Name="UsageDetails" EntityType="FPAService.UsageDetails"/>
+                <EntitySet Name="Currencies_texts" EntityType="FPAService.Currencies_texts"/>
+                <FunctionImport Name="Login" EntitySet="UserMaster" ReturnType="Collection(FPAService.UserMaster)" m:HttpMethod="POST">
+                    <Parameter Name="USER_CODE" Type="Edm.String" MaxLength="30" Mode="In" Nullable="true"/>
+                    <Parameter Name="PASS" Type="Edm.String" MaxLength="100" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="Sample_Login" ReturnType="Edm.String" m:HttpMethod="POST">
+                    <Parameter Name="USER_CODE" Type="Edm.String" MaxLength="30" Mode="In" Nullable="true"/>
+                    <Parameter Name="PASS" Type="Edm.String" MaxLength="100" Mode="In" Nullable="true"/>
+                </FunctionImport>
+                <AssociationSet Name="COA_Currency" Association="FPAService.COA_Currency">
+                    <End Role="COA" EntitySet="COA"/>
+                    <End Role="Currencies" EntitySet="Currencies"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_planHeader" Association="FPAService.ComponentDetail_planHeader">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="PlanHeader" EntitySet="PlanHeader"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_COA" Association="FPAService.ComponentDetail_COA">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="COA" EntitySet="COA"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_driver" Association="FPAService.ComponentDetail_driver">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="Driver" EntitySet="Driver"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_uoM" Association="FPAService.ComponentDetail_uoM">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="UoM" EntitySet="UoM"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_usageType" Association="FPAService.ComponentDetail_usageType">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="UsageType" EntitySet="UsageType"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_components" Association="FPAService.ComponentDetail_components">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="Components" EntitySet="Components"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_dimension1" Association="FPAService.ComponentDetail_dimension1">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="CostCenters" EntitySet="CostCenters"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_dimension2" Association="FPAService.ComponentDetail_dimension2">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="CostCenters" EntitySet="CostCenters"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_dimension3" Association="FPAService.ComponentDetail_dimension3">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="CostCenters" EntitySet="CostCenters"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_dimsneion4" Association="FPAService.ComponentDetail_dimsneion4">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="CostCenters" EntitySet="CostCenters"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentDetail_dimension5" Association="FPAService.ComponentDetail_dimension5">
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                    <End Role="CostCenters" EntitySet="CostCenters"/>
+                </AssociationSet>
+                <AssociationSet Name="getCOA_Currency" Association="FPAService.getCOA_Currency">
+                    <End Role="getCOA" EntitySet="getCOA"/>
+                    <End Role="Currencies" EntitySet="Currencies"/>
+                </AssociationSet>
+                <AssociationSet Name="Currencies_texts_1" Association="FPAService.Currencies_texts_1">
+                    <End Role="Currencies" EntitySet="Currencies"/>
+                    <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="Currencies_localized" Association="FPAService.Currencies_localized">
+                    <End Role="Currencies" EntitySet="Currencies"/>
+                    <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="UsageDetails_componentDetail" Association="FPAService.UsageDetails_componentDetail">
+                    <End Role="UsageDetails" EntitySet="UsageDetails"/>
+                    <End Role="ComponentDetail" EntitySet="ComponentDetail"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="COA">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Balance" Type="Edm.Decimal" sap:variable-scale="true"/>
+                <NavigationProperty Name="Currency" Relationship="FPAService.COA_Currency" FromRole="COA" ToRole="Currencies"/>
+                <Property Name="Currency_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="Level" Type="Edm.Int32"/>
+                <Property Name="ExternalCode" Type="Edm.Int32"/>
+                <Property Name="Postable" Type="Edm.Boolean"/>
+                <Property Name="Account_Number" Type="Edm.Int32"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="CostCenters">
+                <Key>
+                    <PropertyRef Name="CostCenterID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="CostCenterID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="CostCenterName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Active" Type="Edm.Boolean"/>
+                <Property Name="ActiveFrom" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="ActiveTo" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="Dimension" Type="Edm.String"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Driver">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Active" Type="Edm.Boolean"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Value" Type="Edm.Decimal" sap:variable-scale="true"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Components">
+                <Key>
+                    <PropertyRef Name="ComponentID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ComponentID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ComponentName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="ParentId" Type="Edm.String" MaxLength="100"/>
+                <Property Name="IsPlannable" Type="Edm.Boolean"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="UoM">
+                <Key>
+                    <PropertyRef Name="UoMID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="UoMID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="100"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="UsageType">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="PlanHeader">
+                <Key>
+                    <PropertyRef Name="PlanName"/>
+                    <PropertyRef Name="PlanYear"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="PlanName" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <Property Name="PlanYear" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <NavigationProperty Name="componentDetail" Relationship="FPAService.ComponentDetail_planHeader" FromRole="PlanHeader" ToRole="ComponentDetail"/>
+            </EntityType>
+            <EntityType Name="ComponentDetail">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="planHeader_PlanName"/>
+                    <PropertyRef Name="planHeader_PlanYear"/>
+                    <PropertyRef Name="COA_ID"/>
+                    <PropertyRef Name="driver_ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="planHeader" Relationship="FPAService.ComponentDetail_planHeader" FromRole="ComponentDetail" ToRole="PlanHeader"/>
+                <Property Name="planHeader_PlanName" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <Property Name="planHeader_PlanYear" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <NavigationProperty Name="COA" Relationship="FPAService.ComponentDetail_COA" FromRole="ComponentDetail" ToRole="COA"/>
+                <Property Name="COA_ID" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="driver" Relationship="FPAService.ComponentDetail_driver" FromRole="ComponentDetail" ToRole="Driver"/>
+                <Property Name="driver_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Amount" Type="Edm.Int32"/>
+                <Property Name="Quantity" Type="Edm.Int32"/>
+                <NavigationProperty Name="uoM" Relationship="FPAService.ComponentDetail_uoM" FromRole="ComponentDetail" ToRole="UoM"/>
+                <Property Name="uoM_UoMID" Type="Edm.Int32"/>
+                <NavigationProperty Name="usageType" Relationship="FPAService.ComponentDetail_usageType" FromRole="ComponentDetail" ToRole="UsageType"/>
+                <Property Name="usageType_ID" Type="Edm.Int32"/>
+                <NavigationProperty Name="usageDetails" Relationship="FPAService.UsageDetails_componentDetail" FromRole="ComponentDetail" ToRole="UsageDetails"/>
+                <NavigationProperty Name="components" Relationship="FPAService.ComponentDetail_components" FromRole="ComponentDetail" ToRole="Components"/>
+                <Property Name="components_ComponentID" Type="Edm.Int32"/>
+                <NavigationProperty Name="dimension1" Relationship="FPAService.ComponentDetail_dimension1" FromRole="ComponentDetail" ToRole="CostCenters"/>
+                <Property Name="dimension1_CostCenterID" Type="Edm.Int32"/>
+                <NavigationProperty Name="dimension2" Relationship="FPAService.ComponentDetail_dimension2" FromRole="ComponentDetail" ToRole="CostCenters"/>
+                <Property Name="dimension2_CostCenterID" Type="Edm.Int32"/>
+                <NavigationProperty Name="dimension3" Relationship="FPAService.ComponentDetail_dimension3" FromRole="ComponentDetail" ToRole="CostCenters"/>
+                <Property Name="dimension3_CostCenterID" Type="Edm.Int32"/>
+                <NavigationProperty Name="dimsneion4" Relationship="FPAService.ComponentDetail_dimsneion4" FromRole="ComponentDetail" ToRole="CostCenters"/>
+                <Property Name="dimsneion4_CostCenterID" Type="Edm.Int32"/>
+                <NavigationProperty Name="dimension5" Relationship="FPAService.ComponentDetail_dimension5" FromRole="ComponentDetail" ToRole="CostCenters"/>
+                <Property Name="dimension5_CostCenterID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="UserMaster">
+                <Key>
+                    <PropertyRef Name="USER_CODE"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="userid" Type="Edm.Int32"/>
+                <Property Name="USER_CODE" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="USER_NAME" Type="Edm.String" MaxLength="100"/>
+                <Property Name="email_id" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Mob_No" Type="Edm.String" MaxLength="15"/>
+                <Property Name="SUPERUSER" Type="Edm.Boolean"/>
+                <Property Name="Active" Type="Edm.Boolean"/>
+                <Property Name="PASS" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="getCOA">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Balance" Type="Edm.Decimal" sap:variable-scale="true"/>
+                <NavigationProperty Name="Currency" Relationship="FPAService.getCOA_Currency" FromRole="getCOA" ToRole="Currencies"/>
+                <Property Name="Currency_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="Level" Type="Edm.Int32"/>
+                <Property Name="ExternalCode" Type="Edm.Int32"/>
+                <Property Name="Postable" Type="Edm.Boolean"/>
+                <Property Name="Account_Number" Type="Edm.Int32"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="getCostCenters">
+                <Key>
+                    <PropertyRef Name="CostCenterID"/>
+                </Key>
+                <Property Name="CostCenterID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="CostCenterName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Active_CostCenters" Type="Edm.Boolean"/>
+                <Property Name="ActiveFrom" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="ActiveTo" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="Dimension" Type="Edm.String"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="getDriver">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Active_Driver" Type="Edm.Boolean"/>
+                <Property Name="Description_Driver" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Value" Type="Edm.Decimal" sap:variable-scale="true"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="getComponents">
+                <Key>
+                    <PropertyRef Name="ComponentID"/>
+                </Key>
+                <Property Name="ComponentID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ComponentName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="ParentId" Type="Edm.String" MaxLength="100"/>
+                <Property Name="IsPlannable" Type="Edm.Boolean"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="getUoM">
+                <Key>
+                    <PropertyRef Name="UoMID"/>
+                </Key>
+                <Property Name="UoMID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Description_UoM" Type="Edm.String" MaxLength="100"/>
+                <Property Name="ObjType_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Currencies">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+                <Property Name="minorUnit" Type="Edm.Int16"/>
+                <NavigationProperty Name="texts" Relationship="FPAService.Currencies_texts_1" FromRole="Currencies" ToRole="Currencies_texts"/>
+                <NavigationProperty Name="localized" Relationship="FPAService.Currencies_localized" FromRole="Currencies" ToRole="Currencies_texts"/>
+            </EntityType>
+            <EntityType Name="UsageDetails">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="componentDetail_ID"/>
+                    <PropertyRef Name="componentDetail_planHeader_PlanName"/>
+                    <PropertyRef Name="componentDetail_planHeader_PlanYear"/>
+                    <PropertyRef Name="componentDetail_COA_ID"/>
+                    <PropertyRef Name="componentDetail_driver_ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="componentDetail" Relationship="FPAService.UsageDetails_componentDetail" FromRole="UsageDetails" ToRole="ComponentDetail"/>
+                <Property Name="componentDetail_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="componentDetail_planHeader_PlanName" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <Property Name="componentDetail_planHeader_PlanYear" Type="Edm.String" MaxLength="100" Nullable="false"/>
+                <Property Name="componentDetail_COA_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="componentDetail_driver_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="January" Type="Edm.Double"/>
+                <Property Name="February" Type="Edm.Double"/>
+                <Property Name="March" Type="Edm.Double"/>
+                <Property Name="April" Type="Edm.Double"/>
+                <Property Name="May" Type="Edm.Double"/>
+                <Property Name="June" Type="Edm.Double"/>
+                <Property Name="July" Type="Edm.Double"/>
+                <Property Name="August" Type="Edm.Double"/>
+                <Property Name="September" Type="Edm.Double"/>
+                <Property Name="October" Type="Edm.Double"/>
+                <Property Name="November" Type="Edm.Double"/>
+                <Property Name="December" Type="Edm.Double"/>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+            </EntityType>
+            <Association Name="COA_Currency">
+                <End Role="COA" Type="FPAService.COA" Multiplicity="*"/>
+                <End Role="Currencies" Type="FPAService.Currencies" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="Currencies">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="COA">
+                        <PropertyRef Name="Currency_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_planHeader">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="PlanHeader" Type="FPAService.PlanHeader" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanHeader">
+                        <PropertyRef Name="PlanName"/>
+                        <PropertyRef Name="PlanYear"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="planHeader_PlanName"/>
+                        <PropertyRef Name="planHeader_PlanYear"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_COA">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="COA" Type="FPAService.COA" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="COA">
+                        <PropertyRef Name="ID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="COA_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_driver">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="Driver" Type="FPAService.Driver" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="Driver">
+                        <PropertyRef Name="ID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="driver_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_uoM">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="UoM" Type="FPAService.UoM" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="UoM">
+                        <PropertyRef Name="UoMID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="uoM_UoMID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_usageType">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="UsageType" Type="FPAService.UsageType" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="UsageType">
+                        <PropertyRef Name="ID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="usageType_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_components">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="Components" Type="FPAService.Components" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="Components">
+                        <PropertyRef Name="ComponentID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="components_ComponentID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_dimension1">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="CostCenters" Type="FPAService.CostCenters" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CostCenters">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="dimension1_CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_dimension2">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="CostCenters" Type="FPAService.CostCenters" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CostCenters">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="dimension2_CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_dimension3">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="CostCenters" Type="FPAService.CostCenters" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CostCenters">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="dimension3_CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_dimsneion4">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="CostCenters" Type="FPAService.CostCenters" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CostCenters">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="dimsneion4_CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentDetail_dimension5">
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="*"/>
+                <End Role="CostCenters" Type="FPAService.CostCenters" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CostCenters">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="ComponentDetail">
+                        <PropertyRef Name="dimension5_CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="getCOA_Currency">
+                <End Role="getCOA" Type="FPAService.getCOA" Multiplicity="*"/>
+                <End Role="Currencies" Type="FPAService.Currencies" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="Currencies">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="getCOA">
+                        <PropertyRef Name="Currency_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Currencies_texts_1">
+                <End Role="Currencies" Type="FPAService.Currencies" Multiplicity="1">
+                    <OnDelete Action="Cascade"/>
+                </End>
+                <End Role="Currencies_texts" Type="FPAService.Currencies_texts" Multiplicity="*"/>
+            </Association>
+            <Association Name="Currencies_localized">
+                <End Role="Currencies" Type="FPAService.Currencies" Multiplicity="*"/>
+                <End Role="Currencies_texts" Type="FPAService.Currencies_texts" Multiplicity="0..1"/>
+            </Association>
+            <Association Name="UsageDetails_componentDetail">
+                <End Role="UsageDetails" Type="FPAService.UsageDetails" Multiplicity="*"/>
+                <End Role="ComponentDetail" Type="FPAService.ComponentDetail" Multiplicity="0..1">
+                    <OnDelete Action="Cascade"/>
+                </End>
+                <ReferentialConstraint>
+                    <Principal Role="ComponentDetail">
+                        <PropertyRef Name="ID"/>
+                        <PropertyRef Name="planHeader_PlanName"/>
+                        <PropertyRef Name="planHeader_PlanYear"/>
+                        <PropertyRef Name="COA_ID"/>
+                        <PropertyRef Name="driver_ID"/>
+                    </Principal>
+                    <Dependent Role="UsageDetails">
+                        <PropertyRef Name="componentDetail_ID"/>
+                        <PropertyRef Name="componentDetail_planHeader_PlanName"/>
+                        <PropertyRef Name="componentDetail_planHeader_PlanYear"/>
+                        <PropertyRef Name="componentDetail_COA_ID"/>
+                        <PropertyRef Name="componentDetail_driver_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Annotations Target="FPAService.COA" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Chart Of Accounts"/>
+                        <PropertyValue Property="TypeNamePlural" String="Chart Of Accounts"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Name</PropertyPath>
+                        <PropertyPath>Balance</PropertyPath>
+                        <PropertyPath>Level</PropertyPath>
+                        <PropertyPath>ExternalCode</PropertyPath>
+                        <PropertyPath>Postable</PropertyPath>
+                        <PropertyPath>Account_Number</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Balance"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Level"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ExternalCode"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Postable"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Account_Number"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.COA/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Balance" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Balance"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency"/>
+                <Annotation Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Currency"/>
+                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Currency_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Level" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Level"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/ExternalCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="External Code"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Postable" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Postable"/>
+            </Annotations>
+            <Annotations Target="FPAService.COA/Account_Number" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Account Number"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="CostCenters"/>
+                        <PropertyValue Property="TypeNamePlural" String="CostCenters"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>CostCenterName</PropertyPath>
+                        <PropertyPath>Active</PropertyPath>
+                        <PropertyPath>ActiveFrom</PropertyPath>
+                        <PropertyPath>ActiveTo</PropertyPath>
+                        <PropertyPath>Dimension</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CostCenterName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Active"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ActiveFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ActiveTo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Dimension"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/CostCenterName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Cost Center Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/Active" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/ActiveFrom" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active From"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/ActiveTo" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active To"/>
+            </Annotations>
+            <Annotations Target="FPAService.CostCenters/Dimension" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Dimension"/>
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension1"/>
+                            <PropertyValue Property="Value" String="Dimension1"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension2"/>
+                            <PropertyValue Property="Value" String="Dimension2"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension3"/>
+                            <PropertyValue Property="Value" String="Dimension3"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension4"/>
+                            <PropertyValue Property="Value" String="Dimension4"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension5"/>
+                            <PropertyValue Property="Value" String="Dimension5"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.Driver" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Drivers"/>
+                        <PropertyValue Property="TypeNamePlural" String="Drivers"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Active</PropertyPath>
+                        <PropertyPath>Description</PropertyPath>
+                        <PropertyPath>Value</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Active"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Value"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/Active" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/Description" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.Driver/Value" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Value"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Components"/>
+                        <PropertyValue Property="TypeNamePlural" String="Components"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>ComponentName</PropertyPath>
+                        <PropertyPath>ParentId</PropertyPath>
+                        <PropertyPath>IsPlannable</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ComponentName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ParentId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="IsPlannable"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.Components/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/ComponentName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Component Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/ParentId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Parent Id"/>
+            </Annotations>
+            <Annotations Target="FPAService.Components/IsPlannable" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Is Plannable"/>
+            </Annotations>
+            <Annotations Target="FPAService.UoM" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Unit Of Measuraments"/>
+                        <PropertyValue Property="TypeNamePlural" String="Unit Of Measuraments"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Description</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.UoM/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UoM/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UoM/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UoM/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UoM/Description" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageType/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageType/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageType/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageType/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.PlanHeader/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.PlanHeader/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.PlanHeader/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.PlanHeader/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.ComponentDetail/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.ComponentDetail/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.ComponentDetail/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.ComponentDetail/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UserMaster/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UserMaster/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UserMaster/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UserMaster/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Chart Of Accounts"/>
+                        <PropertyValue Property="TypeNamePlural" String="Chart Of Accounts"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Name</PropertyPath>
+                        <PropertyPath>Balance</PropertyPath>
+                        <PropertyPath>Level</PropertyPath>
+                        <PropertyPath>ExternalCode</PropertyPath>
+                        <PropertyPath>Postable</PropertyPath>
+                        <PropertyPath>Account_Number</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Balance"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Level"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ExternalCode"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Postable"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Account_Number"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Balance" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Balance"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency"/>
+                <Annotation Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Currency"/>
+                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Currency_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Level" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Level"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/ExternalCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="External Code"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Postable" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Postable"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCOA/Account_Number" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Account Number"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="CostCenters"/>
+                        <PropertyValue Property="TypeNamePlural" String="CostCenters"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>CostCenterName</PropertyPath>
+                        <PropertyPath>Active</PropertyPath>
+                        <PropertyPath>ActiveFrom</PropertyPath>
+                        <PropertyPath>ActiveTo</PropertyPath>
+                        <PropertyPath>Dimension</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CostCenterName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Active"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ActiveFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ActiveTo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Dimension"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters/CostCenterName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Cost Center Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters/Active_CostCenters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters/ActiveFrom" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active From"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters/ActiveTo" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active To"/>
+            </Annotations>
+            <Annotations Target="FPAService.getCostCenters/Dimension" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Dimension"/>
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension1"/>
+                            <PropertyValue Property="Value" String="Dimension1"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension2"/>
+                            <PropertyValue Property="Value" String="Dimension2"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension3"/>
+                            <PropertyValue Property="Value" String="Dimension3"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension4"/>
+                            <PropertyValue Property="Value" String="Dimension4"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Dimension5"/>
+                            <PropertyValue Property="Value" String="Dimension5"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getDriver" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Drivers"/>
+                        <PropertyValue Property="TypeNamePlural" String="Drivers"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Active</PropertyPath>
+                        <PropertyPath>Description</PropertyPath>
+                        <PropertyPath>Value</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Active"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Value"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getDriver/Active_Driver" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Active"/>
+            </Annotations>
+            <Annotations Target="FPAService.getDriver/Description_Driver" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.getDriver/Value" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Value"/>
+            </Annotations>
+            <Annotations Target="FPAService.getComponents" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Components"/>
+                        <PropertyValue Property="TypeNamePlural" String="Components"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>ComponentName</PropertyPath>
+                        <PropertyPath>ParentId</PropertyPath>
+                        <PropertyPath>IsPlannable</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ComponentName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ParentId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="IsPlannable"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getComponents/ComponentName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Component Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.getComponents/ParentId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Parent Id"/>
+            </Annotations>
+            <Annotations Target="FPAService.getComponents/IsPlannable" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Is Plannable"/>
+            </Annotations>
+            <Annotations Target="FPAService.getUoM" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Unit Of Measuraments"/>
+                        <PropertyValue Property="TypeNamePlural" String="Unit Of Measuraments"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Description</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.getUoM/Description_UoM" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="name"/>
+                <Annotation Term="Common.Label" String="Currency Code"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies/symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency Symbol"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies/minorUnit" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Currency Minor Unit Fractions"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageDetails/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageDetails/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageDetails/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="FPAService.UsageDetails/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies_texts/locale" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Language Code"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies_texts/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FPAService.Currencies_texts/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="name"/>
+                <Annotation Term="Common.Label" String="Currency Code"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

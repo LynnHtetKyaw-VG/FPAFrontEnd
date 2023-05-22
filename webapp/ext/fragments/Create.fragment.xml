@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:c="sap.suite.ui.commons"  xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	 xmlns:layout="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
+<Dialog title="Create Record" class="Hdrtext" >
+ <content>
+<VBox class="sapUiSmallMargin">
+	<f:SimpleForm id="Create"	editable="false"	layout="ResponsiveGridLayout">
+			<f:content>
+				    <Label text="Name" />
+					<Input value="" id="inp1" />
+					<Label text="Balance" />
+					<Input value=""  id="inp2"/>
+					<Label text="Currency" />
+					<Input value="" id="inp3"/>
+					<Label text="Level" />
+					<Input value=""  id="inp4"/>
+					<Label text="External Code" />
+					<Input value="" id="inp5"/>
+					<Label text="Account Number" />
+					<Input value="" id="inp6"/>
+					
+			</f:content>
+		</f:SimpleForm>
+		</VBox>
+
+						
+						 
+   </content>
+            <buttons>      
+			   <Button id="saveBtn" text="Add" press="onAddSave"></Button>    
+               <Button text="Close" press="onCloseAddDialog"></Button>       
+            </buttons> 
+ </Dialog>
+</core:FragmentDefinition> 

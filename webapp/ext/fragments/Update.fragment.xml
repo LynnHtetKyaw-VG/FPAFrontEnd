@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:c="sap.suite.ui.commons"  xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	 xmlns:layout="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
+<Dialog title="Update Record" class="Hdrtext" >
+ <content>
+<VBox class="sapUiSmallMargin">
+	<f:SimpleForm id="Update"	editable="false"	layout="ResponsiveGridLayout">
+			<f:content>
+				    <Label text="Name" />
+					<Input value="{COAModel>/values/Name}" id="input1" />
+					<Label text="Balance" />
+					<Input value="{COAModel>/values/Balance}"  id="input2"/>
+					<Label text="Currency" />
+					<Input value="{COAModel>/values/code}" id="input3" enabled="false"/>
+					<Label text="Level" />
+					<Input value="{COAModel>/values/Level}"  id="input4"/>
+					<Label text="External Code" />
+					<Input value="{COAModel>/values/ExternalCode}" id="input5"/>
+					<Label text="Account Number" />
+					<Input value="{COAModel>/values/Account_Number}" id="input6"/>
+					
+			</f:content>
+		</f:SimpleForm>
+		</VBox>
+
+						
+						 
+   </content>
+            <buttons>      
+			   <Button id="UpdateBtn" text="Update" press="onUpdateSave"></Button>    
+               <Button text="Close" press="onCloseUpdateDialog"></Button>       
+            </buttons> 
+ </Dialog>
+</core:FragmentDefinition> 
