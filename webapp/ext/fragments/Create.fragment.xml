@@ -17,6 +17,8 @@
 					<Input value="" id="inp5"/>
 					<Label text="Account Number" />
 					<Input value="" id="inp6"/>
+					<Label text="Client ID" />
+					<Input value="" id="inp7"/>
 					
 			</f:content>
 		</f:SimpleForm>

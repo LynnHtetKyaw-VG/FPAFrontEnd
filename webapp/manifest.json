@@ -46,7 +46,7 @@
                     "action": "manage",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": ""
+                    "icon": "sap-icon://accounting-document-verification"
                 }
             }
         }

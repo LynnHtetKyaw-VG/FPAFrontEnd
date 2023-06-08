@@ -17,6 +17,8 @@
 					<Input value="{COAModel>/values/ExternalCode}" id="input5"/>
 					<Label text="Account Number" />
 					<Input value="{COAModel>/values/Account_Number}" id="input6"/>
+					<Label text="Client ID" />
+					<Input value="{COAModel>/values/Client_ClientID}" id="input7"/>
 					
 			</f:content>
 		</f:SimpleForm>

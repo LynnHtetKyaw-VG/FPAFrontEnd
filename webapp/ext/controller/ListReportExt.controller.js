@@ -25,6 +25,7 @@ sap.ui.define([
                 sap.ui.getCore().byId("inp4").setValue("");
                 sap.ui.getCore().byId("inp5").setValue("");
                 sap.ui.getCore().byId("inp6").setValue("");
+                sap.ui.getCore().byId("inp7").setValue("");
                 
             }
             this.createDialog.open();
@@ -38,7 +39,8 @@ sap.ui.define([
             var Level = sap.ui.getCore().byId("inp4").getValue();
            var ExternalCode = sap.ui.getCore().byId("inp5").getValue();
             var AccountNumber =sap.ui.getCore().byId("inp6").getValue();
-            if(Name === "" || Balance === "" || Currency === "" || Level === ""  || ExternalCode === "" || AccountNumber===""){
+            var clientid =sap.ui.getCore().byId("inp7").getValue();
+            if(Name === "" || Balance === "" || Currency === "" || Level === ""  || ExternalCode === "" || AccountNumber==="" || clientid===""){
                 sap.m.MessageBox.warning("Please Fill All Details");
             } else {
                 var oData = {
@@ -49,6 +51,7 @@ sap.ui.define([
                    // PoItem_New: PoItem_New,
                     ExternalCode: parseInt(ExternalCode),
                     Account_Number: parseInt(AccountNumber),
+                    Client_ClientID:clientid
                   
                 };
                 var odataModel = that.getView().getModel();
@@ -94,6 +97,7 @@ sap.ui.define([
             var Level = sap.ui.getCore().byId("input4").getValue();
            var ExternalCode = sap.ui.getCore().byId("input5").getValue();
             var AccountNumber =sap.ui.getCore().byId("input6").getValue();
+            var clientid =sap.ui.getCore().byId("input7").getValue();
             var path = "/COA(ID=" +  ID + ",Currencies_code='" + Currency + "')";
         
             var payload = {
@@ -103,6 +107,7 @@ sap.ui.define([
                 Level: parseInt(Level),
                 ExternalCode: parseInt(ExternalCode),
                 Account_Number: parseInt(AccountNumber),
+                Client_ClientID:clientid
             };
             
             var odataModel = that.getView().getModel();
