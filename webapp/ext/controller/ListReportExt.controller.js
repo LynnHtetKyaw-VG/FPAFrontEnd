@@ -9,6 +9,34 @@ sap.ui.define([
             sap.ui.getCore().byId("coa::sap.suite.ui.generic.template.ListReport.view.ListReport::getCOA--template::PageVariant-vm").setVisible(false);
             sap.ui.getCore().byId("coa::sap.suite.ui.generic.template.ListReport.view.ListReport::getCOA--addEntry").setVisible(false);
             sap.ui.getCore().byId("coa::sap.suite.ui.generic.template.ListReport.view.ListReport::getCOA--deleteEntry").setVisible(false);
+            //var odataModel = this.getOwnerComponent().getModel();
+            // var oFilterR = new sap.ui.model.Filter({
+            //     filters: [
+            //         new sap.ui.model.Filter("ObjName", "EQ", "COA")
+            //     ],
+            //     and: true
+            // });
+            // var that=this;
+            // odataModel.read("/GetUserObjectList", {
+            //     filters: [oFilterR],
+            //     success: function (response) {
+            //         if(response.results[0].AccessType==="W"){
+            //             sap.ui.getCore().byId("coa::sap.suite.ui.generic.template.ListReport.view.ListReport::getCOA--createButton").setVisible(true);
+            //             //sap.ui.getCore().byId("createButton").setVisible(false);
+            //         }
+            //         else{
+            //             sap.ui.getCore().byId("coa::sap.suite.ui.generic.template.ListReport.view.ListReport::getCOA--createButton").setVisible(false);
+            //         }
+            //         var AccessModel = new sap.ui.model.json.JSONModel({
+            //             values :response.results
+            //          });
+            //          that.getView().setModel(AccessModel, "AccessModel");
+            //          //this.getView().setModel(AccessModel,"AccessModel");
+            //     },
+            //     error: function (error) {
+            //         sap.m.MessageBox.error("Error while Creating Record");
+            //     }
+            // });
         },
         onCreate: function(oEvent) {
             if (!this.createDialog) {
@@ -25,7 +53,7 @@ sap.ui.define([
                 sap.ui.getCore().byId("inp4").setValue("");
                 sap.ui.getCore().byId("inp5").setValue("");
                 sap.ui.getCore().byId("inp6").setValue("");
-                sap.ui.getCore().byId("inp7").setValue("");
+               // sap.ui.getCore().byId("inp7").setValue("");
                 
             }
             this.createDialog.open();
@@ -39,8 +67,8 @@ sap.ui.define([
             var Level = sap.ui.getCore().byId("inp4").getValue();
            var ExternalCode = sap.ui.getCore().byId("inp5").getValue();
             var AccountNumber =sap.ui.getCore().byId("inp6").getValue();
-            var clientid =sap.ui.getCore().byId("inp7").getValue();
-            if(Name === "" || Balance === "" || Currency === "" || Level === ""  || ExternalCode === "" || AccountNumber==="" || clientid===""){
+            //var clientid =sap.ui.getCore().byId("inp7").getValue();
+            if(Name === "" || Balance === "" || Currency === "" || Level === ""  || ExternalCode === "" || AccountNumber==="" ){
                 sap.m.MessageBox.warning("Please Fill All Details");
             } else {
                 var oData = {
@@ -51,7 +79,7 @@ sap.ui.define([
                    // PoItem_New: PoItem_New,
                     ExternalCode: parseInt(ExternalCode),
                     Account_Number: parseInt(AccountNumber),
-                    Client_ClientID:clientid
+                    //Client_ClientID:clientid
                   
                 };
                 var odataModel = that.getView().getModel();
@@ -97,7 +125,7 @@ sap.ui.define([
             var Level = sap.ui.getCore().byId("input4").getValue();
            var ExternalCode = sap.ui.getCore().byId("input5").getValue();
             var AccountNumber =sap.ui.getCore().byId("input6").getValue();
-            var clientid =sap.ui.getCore().byId("input7").getValue();
+            //var clientid =sap.ui.getCore().byId("input7").getValue();
             var path = "/COA(ID=" +  ID + ",Currencies_code='" + Currency + "')";
         
             var payload = {
@@ -107,7 +135,7 @@ sap.ui.define([
                 Level: parseInt(Level),
                 ExternalCode: parseInt(ExternalCode),
                 Account_Number: parseInt(AccountNumber),
-                Client_ClientID:clientid
+               // Client_ClientID:clientid
             };
             
             var odataModel = that.getView().getModel();
