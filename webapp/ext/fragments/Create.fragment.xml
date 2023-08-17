@@ -10,7 +10,10 @@
 					<Label text="Balance" />
 					<Input value=""  id="inp2"/>
 					<Label text="Currency" />
-					<Input value="" id="inp3"/>
+					 <ComboBox id="inp3"  items="{path : '/Currencies' , length:1000,templateShareable:false}">
+				<core:Item key="{ID}" text="{Name}" />
+				
+			</ComboBox>
 					<Label text="Level" />
 					<Input value=""  id="inp4"/>
 					<Label text="External Code" />

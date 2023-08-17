@@ -10,7 +10,12 @@
 					<Label text="Balance" />
 					<Input value="{COAModel>/values/Balance}"  id="input2"/>
 					<Label text="Currency" />
-					<Input value="{COAModel>/values/code}" id="input3" enabled="false"/>
+				
+					
+ <ComboBox id="input3" enabled="false" selectedKey="{COAModel>/values/code}"  items="{path : '/Currencies' , length:1000,templateShareable:false}">
+				<core:Item key="{ID}" text="{Name}" />
+				
+			</ComboBox>
 					<Label text="Level" />
 					<Input value="{COAModel>/values/Level}"  id="input4"/>
 					<Label text="External Code" />

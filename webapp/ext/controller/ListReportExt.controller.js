@@ -63,7 +63,7 @@ sap.ui.define([
             // var reqValuesToBeAdded = oEvent.getSource().getParent().getParent().getContent()[0].getItems()[0];
             var Name = sap.ui.getCore().byId("inp1").getValue();
             var Balance = sap.ui.getCore().byId("inp2").getValue();
-            var Currency = sap.ui.getCore().byId("inp3").getValue();
+            var Currency = sap.ui.getCore().byId("inp3").getSelectedKey();
             var Level = sap.ui.getCore().byId("inp4").getValue();
            var ExternalCode = sap.ui.getCore().byId("inp5").getValue();
             var AccountNumber =sap.ui.getCore().byId("inp6").getValue();
@@ -74,11 +74,11 @@ sap.ui.define([
                 var oData = {
                     Name: Name,
                     Balance: Balance,
-                    Currencies_code: Currency,
+                    Currencies_ID: parseInt(Currency),
                     Level: parseInt(Level),
                    // PoItem_New: PoItem_New,
                     ExternalCode: parseInt(ExternalCode),
-                    Account_Number: parseInt(AccountNumber),
+                    Account_Number: AccountNumber,
                     //Client_ClientID:clientid
                   
                 };
@@ -113,7 +113,7 @@ sap.ui.define([
                 that.getView().addDependent(that.updateDialog);
             }
             that.updateDialog.open();
-        
+            sap.ui.getCore().byId("input3").setSelectedKey(oEvent.getSource().getBindingContext().getObject().CID);
             
         },
         onUpdateSave:function(oEvent){
@@ -121,20 +121,20 @@ sap.ui.define([
             var ID =this.getView().getModel("COAModel").getData().values.ID;
             var Name = sap.ui.getCore().byId("input1").getValue();
             var Balance = sap.ui.getCore().byId("input2").getValue();
-            var Currency = sap.ui.getCore().byId("input3").getValue();
+            var Currency = sap.ui.getCore().byId("input3").getSelectedKey();
             var Level = sap.ui.getCore().byId("input4").getValue();
            var ExternalCode = sap.ui.getCore().byId("input5").getValue();
             var AccountNumber =sap.ui.getCore().byId("input6").getValue();
             //var clientid =sap.ui.getCore().byId("input7").getValue();
-            var path = "/COA(ID=" +  ID + ",Currencies_code='" + Currency + "')";
+            var path = "/COA(ID=" +  ID + ",Currencies_ID=" + Currency + ")";
         
             var payload = {
                 Name: Name,
                 Balance: Balance,
-                Currencies_code: Currency,
+                Currencies_ID: Currency,
                 Level: parseInt(Level),
                 ExternalCode: parseInt(ExternalCode),
-                Account_Number: parseInt(AccountNumber),
+                Account_Number: AccountNumber,
                // Client_ClientID:clientid
             };
             
@@ -157,8 +157,8 @@ sap.ui.define([
             var that = this;
             var ID =oEvent.getSource().getBindingContext().getObject().ID;
             // var Balance = oEvent.getSource().getBindingContext().getObject().Balance;
-             var Currency = oEvent.getSource().getBindingContext().getObject().code;
-            var path = "/COA(ID=" +  ID + ",Currencies_code='" + Currency + "')";
+             var Currency = oEvent.getSource().getBindingContext().getObject().CID;
+            var path = "/COA(ID=" +  ID + ",Currencies_ID=" + Currency + ")";
 
             var odataModel = that.getView().getModel();
                                     
