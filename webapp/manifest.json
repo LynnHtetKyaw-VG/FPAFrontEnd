@@ -46,7 +46,16 @@
                     "action": "manage",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": "sap-icon://accounting-document-verification"
+                    "icon": "sap-icon://accounting-document-verification",
+                    "info":"Total Accounts",
+                    "indicatorDataSource": {
+                        "dataSource": "Vanguard",
+                        "path": "/dynamic_dest/Vanguard/v2/service/FPA/COA/$count",
+                        "refresh": 0
+                      
+                    }
+                    
+                    
                 }
             }
         }
