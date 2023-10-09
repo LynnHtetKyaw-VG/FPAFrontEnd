@@ -4,14 +4,14 @@
     <Column id="Update">
         <Text text="Update"/>
         <customData>
-            <core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;CustomColumn7&quot;, &quot;leadingProperty&quot;: &quot;Name&quot;, &quot;columnIndex&quot;: &quot;7&quot;}"/>
+            <core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;CustomColumn7&quot;, &quot;leadingProperty&quot;: &quot;Name&quot;, &quot;columnIndex&quot;: &quot;8&quot;}"/>
         </customData>
     </Column>
     <!-- <Column id="Delete" visible="{= ${AccessModel>/values/0/AccessType} === 'W' ? true:false}"> -->
 <Column id="Delete" >
         <Text text="Delete"/>
         <customData>
-           <core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;CustomColumn8&quot;, &quot;leadingProperty&quot;: &quot;Name&quot;, &quot;columnIndex&quot;: &quot;8&quot;}"/>
+           <core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;CustomColumn8&quot;, &quot;leadingProperty&quot;: &quot;Name&quot;, &quot;columnIndex&quot;: &quot;9&quot;}"/>
         </customData>
     </Column>
 </core:FragmentDefinition>
