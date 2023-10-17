@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout" xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified">
+    <Dialog id="kitDialog" title="UPLOAD DATA" class="AddItemsDialogClass" titleAlignment="Center" visible="true">
+        <f:Form id="FormChange354" editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                      
+                        <f:FormElement label="Upload File">
+                            <f:fields>
+                            <!-- <Input id="inp" enabled="false"></Input> -->
+                                <!-- <u:FileUploader id="FileUploaderId" enabled="true" sameFilenameAllowed="true" iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx" icon="sap-icon://upload" iconFirst="true" style="Emphasized"  uploadComplete="handleUploadComplete" change=""/> -->
+                          <u:FileUploader id="FileUploaderId" name="myFileUpload" tooltip="Upload (.xlsx)" change="onUpload" style="Emphasized"
+                        fileType="xlsx" placeholder="Choose a file for Upload (.xlsx)" sendXHR="true" useMultipart="false"/>
+          
+                            <!-- change="onUpload" -->
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+        <buttons>
+            <!-- <Button text="Upload" press="" id="uploadBtn" class="cancelBtnClass sapUiTinyMarginEnd sapUiSizeCompact sapUiTinyMarginTop sapUiTinyMarginBottom" /> -->
+            <Button text="Close" press="onCloseUpload" id="closeBtn" class="cancelBtnClass sapUiTinyMarginEnd sapUiSizeCompact sapUiTinyMarginTop sapUiTinyMarginBottom" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

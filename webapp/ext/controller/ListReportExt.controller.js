@@ -1,6 +1,8 @@
 sap.ui.define([
-    "sap/m/MessageToast"
-], function(MessageToast) {
+    "sap/m/MessageToast",
+    "coa/model/xlsx.full.min",
+    "coa/model/jszip"
+], function(MessageToast,xlsx, jszip) {
     'use strict';
 
     return {
@@ -37,6 +39,40 @@ sap.ui.define([
             //         sap.m.MessageBox.error("Error while Creating Record");
             //     }
             // });
+        },
+        onBeforeRendering: function (oEvent) {
+            var that = this;
+
+            var odataModel = this.getOwnerComponent().getModel();
+
+
+
+
+
+
+
+            odataModel.read("/GetClient", {
+
+                success: function (response) {
+
+
+                    var ClientModel = new sap.ui.model.json.JSONModel({
+                        values: response.results
+                    });
+                    that.getView().setModel(ClientModel, "ClientModel");
+
+
+
+
+
+
+                },
+                error: function (error) {
+                    sap.m.MessageBox.error(error);
+                }
+            });
+
+
         },
         onCreate: function(oEvent) {
             if (!this.createDialog) {
@@ -182,5 +218,146 @@ sap.ui.define([
                 }
             });
                             },
+                            onUploadFile: function () {
+                                if (!this.UploadFragment) {
+                    
+                                    this.UploadFragment = sap.ui.xmlfragment(
+                    
+                                        "coa.ext.fragments.UploadFile",
+                    
+                    
+                    
+                                        this
+                    
+                                    );
+                    
+                    
+                    
+                                    this.getView().addDependent(this.UploadFragment);
+                    
+                                    this.UploadFragment.open();
+                    
+                    
+                                } else {
+                    
+                                    this.UploadFragment.open();
+                                }
+                            },
+                            onCloseUpload: function () {
+                                var that = this;
+                                that.UploadFragment.close();
+                            },
+                            onUpload: function (e) {
+                                // e.getSource().getParent().getFields()[0].setValue(e.getParameter("files")[0].name);
+                                // e.getSource().getParent().getFields()[1].setEnabled(false);;
+                    
+                                this._import(e.getParameter("files") && e.getParameter("files")[0]);
+                            },
+                    
+                            _import: function (file) {
+                                //file=sap.ui.getCore().byId("FileUploaderId").getValue();
+                                var that = this;
+                                var clienid = that.getView().getModel("ClientModel").getData().values[0].ClientID;
+                                //that.onClose1();
+                                //that.getView().setBusy(true);
+                                // var oModel = new sap.ui.model.odata.ODataModel(that.getOwnerComponent().getModel().sServiceUrl, true);
+                                var oModel = that.getOwnerComponent().getModel("ManualUpload");
+                    
+                                var excelData = [];
+                                if (file && window.FileReader) {
+                                    var reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        var data = e.target.result;
+                                        var workbook = XLSX.read(data, {
+                                            type: 'binary'
+                                        });
+                                        workbook.SheetNames.forEach(function (sheetName) {
+                                            // Here is your object for every sheet in workbook
+                                            excelData.push(XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]));
+                    
+                                        });
+                                        console.log(excelData);
+                                        //that.batchChanges = [];
+                                        var COA = [];
+                                        // var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                                        //     pattern: "YYYY-MM-dd"
+                                        // });
+                                        for (var i in excelData) {
+                                            sap.ui.core.BusyIndicator.show();
+                                            if (excelData[i].length > 0) {
+                                                for (var j in excelData[i]) {
+                                                    // batchChanges.push(oModel.createBatchOperation("/T_AR_SERIAL_MASTER_UPLOAD", "POST", excelData[i][j]));
+                    
+                                                    var payload = {
+                                                        "Account_Number": excelData[i][j].Account_Number == undefined ? "" : excelData[i][j].Account_Number.toString(),
+                                                        
+                                                        "Name": excelData[i][j].Name == undefined ? "" : excelData[i][j].Name.toString(),
+                                                        "Level": excelData[i][j].Level == undefined ? "" : excelData[i][j].Level,
+                                                        "Balance": excelData[i][j].Balance == undefined ? "" : excelData[i][j].Balance.toString(),
+                                                        "Currencies_Code": excelData[i][j].Currencies_Code == undefined ? "" : excelData[i][j].Currencies_Code.toString(),
+                                                        "LocCurrencies_code": excelData[i][j].LocCurrencies_code == undefined ? "" : excelData[i][j].LocCurrencies_code.toString(),
+                                                        "LocBalance": excelData[i][j].LocBalance == undefined ? "" : excelData[i][j].LocBalance.toString(),
+                                                        "SysCurrencies_Code": excelData[i][j].SysCurrencies_Code == undefined ? "" : excelData[i][j].SysCurrencies_Code.toString(),
+                                                        "SysBalance": excelData[i][j].SysBalance == undefined ? "" : excelData[i][j].SysBalance.toString()
+                                                        
+                                                        
+                                                    };
+                                                    COA.push(payload);
+                                                    // that.batchChanges.push(obj);
+                                                }
+                    
+                                            }
+                    
+                                        }
+                                        var oData = {
+                    
+                    
+                                            "ClientID": clienid,
+                    
+                                            "COA": COA
+                    
+                    
+                                        };
+                                        that.onPost(oData);
+                    
+                    
+                                    };
+                                    reader.onerror = function (ex) {
+                                        console.log(ex);
+                                    };
+                                    reader.readAsBinaryString(file);
+                                }
+                            },
+                            readChecklistEntity: function (path, oData) {
+                                var that = this;
+                                var odataModel = that.getView().getModel();
+                                return new Promise(
+                                    function (resolve, reject) {
+                                        that.getView().getModel("ManualUpload").create(path, oData, {
+                                            success: function (oData) {
+                                                resolve(oData);
+                                                sap.m.MessageToast.show("File Uploaded");
+                                                odataModel.refresh();
+                                                that.UploadFragment.close();
+                                                sap.ui.core.BusyIndicator.hide();
+                                             
+                                            },
+                                            error: function (oResult) {
+                                                reject(oResult);
+                                                sap.m.MessageToast.show("Error");
+                                                sap.ui.core.BusyIndicator.hide();
+                                            }
+                                        });
+                                    });
+                            },
+                    
+                    
+                            onPost: function (oData) {
+                                var that = this;
+                                Promise.all([that.readChecklistEntity("/Upload_COA", oData)
+                    
+                                ]);
+                               
+                            }
     };
 });

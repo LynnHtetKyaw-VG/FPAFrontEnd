@@ -27,6 +27,17 @@
                     "odataVersion": "2.0"
                 }
             },
+            "Upload": {
+                "uri": "/v2/manual-data-upload/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
             "annotation": {
                 "type": "ODataAnnotation",
                 "uri": "annotations/annotation.xml",
@@ -113,6 +124,18 @@
                     }
                 }
             },
+            "ManualUpload": {
+                "dataSource": "Upload",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
+                }
+            },
             "@i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "uri": "i18n/i18n.properties"
@@ -150,6 +173,12 @@
                             "getCOA": {
                                 "EntitySet": "getCOA",
                                 "Actions": {
+                                    "Uploadbtn": {
+                                        "id": "UploadbtnButton",
+                                        "text": "Upload",
+                                        "press": "onUploadFile",
+                                        "requiresSelection": false
+                                    },
                                     "create": {
                                         "id": "createButton",
                                         "text": "Create",
