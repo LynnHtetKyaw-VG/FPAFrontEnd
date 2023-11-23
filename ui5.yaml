@@ -17,7 +17,7 @@ server:
           url: https://ui5.sap.com
         backend:
           - path: /v2
-            url: https://vanguard-business-solutions-and-consulting-pte--ltd--fp7d22518f.cfapps.eu10-004.hana.ondemand.com
+            url: https://vanguard-business-solutions-and-consulting-pte--ltd--fpa1e3cef3.cfapps.eu10-004.hana.ondemand.com/
             destination: Vanguard
     - name: fiori-tools-appreload
       afterMiddleware: compression
